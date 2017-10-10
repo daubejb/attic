@@ -5,11 +5,11 @@ var brain = {
       thoughtText: thoughtText
     });
   },
-  changeThought: function() {
-    console.log('change thought called')
+  changeThought: function(position, thoughtText) {
+    this.thoughts[position].thoughtText = thoughtText;
   },
   deleteThought: function() {
-    console.log('delete thought called')
+    this.thoughts.splice(position, 1);
   }
 };
 
@@ -18,6 +18,14 @@ var handler = {
     var addThoughtTextInput = document.getElementById('addThoughtTextInput');
     brain.addThought(addThoughtTextInput.value);
     addThoughtTextInput = '';
+    view.displayThoughts();
+  },
+  changeThought: function(position, thoughtText) {
+    var changeThoughtPositionInput = document.getElementById('changeThoughtPositionInput');
+    var changeThoughtTextInput = document.getElementById('changeThoughtTextInput');
+    brain.changeThought(changeThoughtPositionInput.valueAsNumber, changeThoughtTextInput.value);
+    changeThoughtPositionInput = '';
+    changeThoughtTextInput = '';
     view.displayThoughts();
   }
 };

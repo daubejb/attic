@@ -8,8 +8,17 @@
 </head>
 <body>
   <h1>thoughts</h1>
-  <input type="text" id="addThoughtTextInput">
-  <button onclick="handler.addThought()">Add thought</button>
+  
+  <div>
+    <input type="text" id="addThoughtTextInput">
+    <button onclick="handler.addThought()">Add thought</button>
+  </div>
+
+  <div>
+    <input type="number" id="changeThoughtPositionInput">
+    <input type="text" id="changeThoughtTextInput">
+    <button onclick="handler.changeThought()">Change thought</button>
+  </div>
   <ul id="thoughtsList"></ul>
   <script src="./client.js"></script>
 </body>
