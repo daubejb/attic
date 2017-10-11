@@ -9,16 +9,36 @@
 <body>
   <h1>thoughts</h1>
   
+  <!-- User shall add a thought -->
   <div>
     <input type="text" id="addThoughtTextInput">
     <button onclick="handler.addThought()">Add thought</button>
   </div>
 
+  <!-- User shall change a thought -->
   <div>
     <input type="number" id="changeThoughtPositionInput">
     <input type="text" id="changeThoughtTextInput">
     <button onclick="handler.changeThought()">Change thought</button>
   </div>
+
+  <!-- User shall connect two thoughts -->
+  <div>
+    <input type="number" id="sourceThoughtPositionInput">
+    <select id="connectionTypeInput">
+      <option value="synonym">is synonymous to</option>
+      <option value="antonym">is opposite to</option>
+      <option value="part">is part of</option>
+      <option value="type">is a type of</option>
+      <option value="object">is used to</option>
+      <option value="perform">does</option>
+      <option value="cause">is a cause of</option>
+      <option value="symbol">is a symbol of</option>
+    </select>
+    <input type="number" id="targetThoughtPositionInput">
+    <button onclick="handler.addConnection()">Connect thought</button>
+  </div>
+
   <ul id="thoughtsList"></ul>
   <script src="./client.js"></script>
 </body>
