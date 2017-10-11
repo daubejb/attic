@@ -38,8 +38,18 @@
     <input type="number" id="targetThoughtPositionInput">
     <button onclick="handler.addConnection()">Connect thought</button>
   </div>
+  <div>
+    <ul id="thought-list"></ul>
+  </div>
 
-  <ul id="thoughtsList"></ul>
+  <script id="thought-template" type="text/x-handlebars-template">
+    {{#this}}
+      <li data-id="{{id}}">
+        {{thoughtText}}
+      </li>
+    {{/this}}
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.js"></script>
   <script src="./client.js"></script>
 </body>
 </html>

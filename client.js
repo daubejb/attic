@@ -17,6 +17,11 @@ var util = {
 }
 
 var brain = {
+  init: function() {
+    var tTemplate = document.getElementById('thought-template').innerHTML;
+    this.thoughtTemplate = Handlebars.compile(tTemplate);
+    view.setUpEventListeners();
+  },
   thoughts: [],
   addThought: function(thoughtText) {
     var val = thoughtText.trim();
@@ -146,17 +151,9 @@ var handler = {
 
 var view = {
   displayThoughts: function() {
-    var thoughtsUl = document.querySelector('#thoughtsList');
-    thoughtsUl.innerHTML = '';
-
-    brain.thoughts.forEach(function(thought){
-      var thoughtLi = document.createElement('li');
-      var thoughtText = thought.thoughtText;
-
-      thoughtLi.textContent = thoughtText;
-      thoughtLi.appendChild(this.createDeleteButton());
-      thoughtsUl.appendChild(thoughtLi);
-    }, this);
+    var thoughts = brain.thoughts;
+    var test = document.getElementById('thought-list');
+    test.innerHTML =  brain.thoughtTemplate(thoughts);
   },
   createDeleteButton: function() {
     var deleteButton = document.createElement('button');
@@ -165,7 +162,7 @@ var view = {
     return deleteButton;
   },
   setUpEventListeners: function() {
-    var thoughtsUl = document.querySelector('ul');
+    var thoughtsUl = document.getElementById('thought-list');
 
     thoughtsUl.addEventListener('click', function(event) {
       console.log(event.target.parentNode.id);
@@ -179,4 +176,4 @@ var view = {
   }
 };
 
-view.setUpEventListeners();
+brain.init();
