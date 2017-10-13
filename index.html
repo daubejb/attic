@@ -45,7 +45,8 @@
   <script id="thought-template" type="text/x-handlebars-template">
     {{#this}}
       <li id="{{id}}">
-        {{thoughtText}}&nbsp
+        <label class=thoughtItem>{{thoughtText}}&nbsp</label>
+        <input style="display: none;" class="changeThought" value="{{thoughtText}}">
         <button class="deleteButton">Delete</button>
       </li>
     {{/this}}

@@ -2,6 +2,8 @@
 <script src="client.js"></script>
 <script>
   var tempBrain = brain.thoughts;
+  brain.thoughts = [];
+  util.storeWrite('thoughts', '');
   tests({
     'Add thought: It shall have a way to add a new thought': function() {
       var thought = 'new thought';

@@ -28,9 +28,9 @@ var util = {
 
 var brain = {
   init: function() {
+    this.thoughts = util.storeRead('thoughts');
     var tTemplate = document.getElementById('thought-template').innerHTML;
     this.thoughtTemplate = Handlebars.compile(tTemplate);
-    this.thoughts = util.storeRead('thoughts');
     view.setUpEventListeners();
     view.displayThoughts();
   },
@@ -192,13 +192,24 @@ var view = {
 
     var thoughtsUl = document.getElementById('thought-list');
 
-    thoughtsUl.addEventListener('click', function(event) {
-      console.log(event.target.parentNode.id);
+    // thoughtsUl.addEventListener('click', function(event) {
+    //   var elementClicked = event.target;
+    //   if (elementClicked.className === 'deleteButton') {
+    //     handler.deleteThought(elementClicked.parentNode.id);
+    //   }
+    // });
 
+    thoughtsUl.addEventListener('dblclick', (event) => {
       var elementClicked = event.target;
-
-      if (elementClicked.className === 'deleteButton') {
-        handler.deleteThought(elementClicked.parentNode.id);
+      if (elementClicked.className === 'thoughtItem') {
+        var input = elementClicked.nextElementSibling;
+        input.style.display = "inline";
+        input.focus();
+        var tempVal = input.value;
+        input.value = '';
+        input.value = tempVal;
+        elementClicked.style.display = "none";
+        
       }
     });
   }
