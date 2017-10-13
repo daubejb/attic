@@ -1,3 +1,6 @@
+var ENTER_KEY = 13;
+var ESCAPE_KEY = 27;
+
 var util = {
   uuid: function () {
     /*jshint bitwise:false */
@@ -29,6 +32,7 @@ var brain = {
     this.thoughtTemplate = Handlebars.compile(tTemplate);
     this.thoughts = util.storeRead('thoughts');
     view.setUpEventListeners();
+    view.displayThoughts();
   },
   thoughts: [],
   addThought: function(thoughtText) {
@@ -130,11 +134,16 @@ var brain = {
   }
 };
 
-
 var handler = {
-  addThought: function () {
+  addThought: function (event) {
     var addThoughtTextInput = document.getElementById('addThoughtTextInput');
-    brain.addThought(addThoughtTextInput.value);
+    var addThoughtTextInputValue = event.target.value;
+
+    if (event.which !== ENTER_KEY || !addThoughtTextInputValue) {
+      return;
+    }
+
+    brain.addThought(addThoughtTextInputValue);
     addThoughtTextInput.value = '';
     view.displayThoughts();
   },
@@ -171,13 +180,13 @@ var view = {
     var test = document.getElementById('thought-list');
     test.innerHTML =  brain.thoughtTemplate(thoughts);
   },
-  createDeleteButton: function() {
-    var deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.className = 'deleteButton';
-    return deleteButton;
-  },
   setUpEventListeners: function() {
+
+    var addThoughtTextInput = document.getElementById('addThoughtTextInput');
+    addThoughtTextInput.addEventListener('keyup', (event) => {
+      handler.addThought(event);
+    });
+
     var thoughtsUl = document.getElementById('thought-list');
 
     thoughtsUl.addEventListener('click', function(event) {

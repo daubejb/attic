@@ -11,7 +11,7 @@
   
   <!-- User shall add a thought -->
   <div>
-    <input type="text" id="addThoughtTextInput">
+    <input type="text" id="addThoughtTextInput" placeholder="What are you thinking?">
     <button onclick="handler.addThought()">Add thought</button>
   </div>
 
@@ -45,7 +45,8 @@
   <script id="thought-template" type="text/x-handlebars-template">
     {{#this}}
       <li data-id="{{id}}">
-        {{thoughtText}}
+        {{thoughtText}}&nbsp
+        <button class="deleteButton">Delete</button>
       </li>
     {{/this}}
   </script>
