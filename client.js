@@ -6,6 +6,7 @@ var util = {
     /*jshint bitwise:false */
     var i, random;
     var uuid = '';
+    var tempValue = '';
 
     for (i = 0; i < 32; i++) {
       random = Math.random() * 16 | 0;
@@ -23,7 +24,14 @@ var util = {
   storeRead: function(namespace) {
     var store = localStorage.getItem(namespace);
     return (store && JSON.parse(store)) || [];
+  },
+  putTempValue: function(value) {
+    this.tempValue = value;
+  },
+  getTempValue: function(value) {
+    return this.tempValue;
   }
+
 }
 
 var brain = {
@@ -45,8 +53,11 @@ var brain = {
     });
     util.storeWrite('thoughts', this.thoughts);
   },
-  changeThought: function(position, thoughtText) {
-    this.thoughts[position].thoughtText = thoughtText;
+  changeThought: function(id, thoughtText) {
+    this.getThoughtById(id);
+    var position = this.thoughts.indexOf(thoughtToDelete);
+    this.thoughts[position] = thoughtText
+    util.storeWrite('thoughts', this.thoughts);
   },
   addConnection: function(sourcePosition, targetPosition, connectionType) {
     var connectionTypeText = this.getConnectionText(connectionType);
@@ -150,12 +161,8 @@ var handler = {
     addThoughtTextInput.value = '';
     view.displayThoughts();
   },
-  changeThought: function(position, thoughtText) {
-    var changeThoughtPositionInput = document.getElementById('changeThoughtPositionInput');
-    var changeThoughtTextInput = document.getElementById('changeThoughtTextInput');
-    brain.changeThought(changeThoughtPositionInput.valueAsNumber, changeThoughtTextInput.value);
-    changeThoughtPositionInput.value = '';
-    changeThoughtTextInput.value = '';
+  changeThought: function(id, thoughtText) {
+    brain.changeThought(id, thoughtText);
     view.displayThoughts();
   },
   addConnection: function(sourcePosition, targetPosition, connectionType) {
@@ -206,12 +213,35 @@ var view = {
         input.style.display = "inline";
         input.focus();
         var tempVal = input.value;
+        util.putTempValue(tempVal);
         input.value = '';
         input.value = tempVal;
         elementClicked.style.display = "none";
-        
       }
     });
+
+    thoughtsUl.addEventListener('keyup', (event) => {
+      var elementKeyUpped  = event.target;
+      var id = elementKeyUpped.parentNode.id;
+        if (event.which === ENTER_KEY) {
+          event.target.blur();
+          var label = elementKeyUpped.previousElementSibling;
+          label.innerHTML = elementKeyUpped.value;
+          label.style.display = "inline";
+
+          elementKeyUpped.style.display = "none";
+          handler.changeThought(id, elementKeyUpped.value);
+        }
+
+        if (event.which === ESCAPE_KEY) {
+          event.target.value = util.getTempValue();
+          event.target.blur();
+          var label = elementKeyUpped.previousElementSibling;
+          label.style.display = "inline";
+          elementKeyUpped.style.display = "none";
+        }
+
+    })
   }
 };
 
