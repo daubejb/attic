@@ -129,8 +129,13 @@ var brain = {
       }
     }
   },
-  deleteThought: function(position) {
+  deleteThought: function(id) {
+    console.log('id: ', id);
+    var thoughtToDelete = this.getThoughtById(id);
+    var position = this.thoughts.indexOf(thoughtToDelete);
+    console.log(position);
     this.thoughts.splice(position, 1);
+    util.storeWrite('thoughts', this.thoughts);
   }
 };
 
@@ -167,8 +172,8 @@ var handler = {
     connectionTypeInput.value = '';
     view.displayThoughts();
   },
-  deleteThought: function(position) {
-    brain.deleteThought(position);
+  deleteThought: function(id) {
+    brain.deleteThought(id);
     view.displayThoughts();
   }
 };
@@ -195,7 +200,7 @@ var view = {
       var elementClicked = event.target;
 
       if (elementClicked.className === 'deleteButton') {
-        handler.deleteThought(parseInt(elementClicked.parentNode.id));
+        handler.deleteThought(elementClicked.parentNode.id);
       }
     });
   }
