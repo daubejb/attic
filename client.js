@@ -130,10 +130,8 @@ var brain = {
     }
   },
   deleteThought: function(id) {
-    console.log('id: ', id);
     var thoughtToDelete = this.getThoughtById(id);
     var position = this.thoughts.indexOf(thoughtToDelete);
-    console.log(position);
     this.thoughts.splice(position, 1);
     util.storeWrite('thoughts', this.thoughts);
   }

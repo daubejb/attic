@@ -1,6 +1,7 @@
 <script src="./tinytest.js"></script>
 <script src="client.js"></script>
 <script>
+  var tempBrain = brain.thoughts;
   tests({
     'Add thought: It shall have a way to add a new thought': function() {
       var thought = 'new thought';
@@ -39,14 +40,21 @@
       var test_id = brain.thoughts[0].id;
       brain.addThought('wrong thought');
       eq('my thought', brain.getThoughtById(test_id).thoughtText);
+    },
+    'Delete thought: It shall have a way to delete a thought': function() {
+      brain.thoughts = [];
+      var thought = 'my thought 1';
+      brain.addThought(thought);
+      var test_id = brain.thoughts[0].id;
+      brain.addThought('wrong thought');
+      brain.deleteThought(test_id);
+      brain.thoughts.forEach( (thought) => {
+        if (thought.id === test_id) {
+          fail();
+        }
+      });
     }
-    // ,
-    // 'Delete thought: It shall have a way to delete a thought': function() {
-    //   brain.thoughts = [];
-    //   var thought = 'my thought 1';
-    //   brain.addThought(thought);
-    //   brain.deleteThought()
-
-    // }
   });
+  brain.thoughts = tempBrain;
+  util.storeWrite('thoughts', brain.thoughts);
 </script>
