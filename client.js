@@ -27,6 +27,7 @@ var brain = {
   init: function() {
     var tTemplate = document.getElementById('thought-template').innerHTML;
     this.thoughtTemplate = Handlebars.compile(tTemplate);
+    this.thoughts = util.storeRead('thoughts');
     view.setUpEventListeners();
   },
   thoughts: [],
@@ -116,6 +117,13 @@ var brain = {
       'receivingText': receiving
     };
     return connectionTypeDirections
+  },
+  getThoughtById: function(id) {
+    for (i = 0; i < this.thoughts.length; i++) {
+      if (id === this.thoughts[i].id) {
+        return this.thoughts[i];
+      }
+    }
   },
   deleteThought: function(position) {
     this.thoughts.splice(position, 1);
