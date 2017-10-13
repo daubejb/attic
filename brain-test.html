@@ -1,0 +1,35 @@
+<script src="./tinytest.js"></script>
+<script src="client.js"></script>
+<script>
+  tests({
+    'It shall have a way to add a new thought': function() {
+      var thought = 'new thought';
+      brain.addThought(thought);
+      eq('new thought', brain.thoughts[0].thoughtText)
+    },
+    'It shall trim leading and trailing spaces': function() {
+      var thought = '  new thought  ';
+      brain.addThought(thought);
+      eq('new thought', brain.thoughts[0].thoughtText)
+    },
+    'It shall generate a unique id for each thought': function() {
+      var thoughts = ['one', 'two'];
+      for (var i = 0; i < thoughts.length; i++) {
+        brain.addThought(thoughts[i]);
+      }
+      assert(brain.thoughts[0].id != brain.thoughts[1].id);
+    },
+    'It shall store all thoughts in local storage': function() {
+      var thought = 'my thought';
+      brain.addThought(thought);
+      var localStorageThoughts = util.storeRead('thoughts');
+      var result = false;
+      localStorageThoughts.forEach(function(item) {
+        if (item.thoughtText === 'my thought') {
+          result = true;
+        }
+      });
+      assert(result, 'thought not stored to local storage');
+    }
+  });
+</script>

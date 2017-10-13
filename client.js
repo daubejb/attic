@@ -13,6 +13,13 @@ var util = {
     }
 
     return uuid;
+  },
+  storeWrite: function(namespace, data) {
+    return localStorage.setItem(namespace, JSON.stringify(data));
+  },
+  storeRead: function(namespace) {
+    var store = localStorage.getItem(namespace);
+    return (store && JSON.parse(store)) || [];
   }
 }
 
@@ -31,6 +38,7 @@ var brain = {
       thoughtText: val,
       connections: []
     });
+    util.storeWrite('thoughts', this.thoughts);
   },
   changeThought: function(position, thoughtText) {
     this.thoughts[position].thoughtText = thoughtText;
