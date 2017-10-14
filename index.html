@@ -40,7 +40,7 @@
       <li id="{{id}}">
         <label class=thoughtItem>{{thoughtText}}</label>
         <input style="display: none;" class="changeThought" value="{{thoughtText}}">
-        <button class="deleteButton">Delete</button>
+        <button class="deleteButton" onclick="handler.deleteThought(event)">Delete</button>
       </li>
     {{/this}}
   </script>

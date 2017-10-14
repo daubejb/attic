@@ -177,8 +177,9 @@ var handler = {
     connectionTypeInput.value = '';
     view.displayThoughts();
   },
-  deleteThought: function(id) {
-    brain.deleteThought(id);
+  deleteThought: function(event) {
+    var thoughtToDeleteId = event.target.parentNode.id;
+    brain.deleteThought(thoughtToDeleteId);
     view.displayThoughts();
   }
 };
