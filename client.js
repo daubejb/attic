@@ -54,9 +54,9 @@ var brain = {
     util.storeWrite('thoughts', this.thoughts);
   },
   changeThought: function(id, thoughtText) {
-    this.getThoughtById(id);
-    var position = this.thoughts.indexOf(thoughtToDelete);
-    this.thoughts[position] = thoughtText
+    var thoughtToChange = this.getThoughtById(id);
+    var position = this.thoughts.indexOf(thoughtToChange);
+    this.thoughts[position].thoughtText = thoughtText;
     util.storeWrite('thoughts', this.thoughts);
   },
   addConnection: function(sourcePosition, targetPosition, connectionType) {
@@ -232,7 +232,6 @@ var view = {
           elementKeyUpped.style.display = "none";
           handler.changeThought(id, elementKeyUpped.value);
         }
-
         if (event.which === ESCAPE_KEY) {
           event.target.value = util.getTempValue();
           event.target.blur();
@@ -240,8 +239,7 @@ var view = {
           label.style.display = "inline";
           elementKeyUpped.style.display = "none";
         }
-
-    })
+    });
   }
 };
 
