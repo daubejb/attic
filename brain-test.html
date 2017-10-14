@@ -5,24 +5,24 @@
   brain.thoughts = [];
   util.storeWrite('thoughts', '');
   tests({
-    'Add thought: It shall have a way to add a new thought': function() {
+    'Add thought: It shall have a way to add a new thought -->': function() {
       var thought = 'new thought';
       brain.addThought(thought);
       eq('new thought', brain.thoughts[0].thoughtText)
     },
-    'Add thought: It shall trim leading and trailing spaces': function() {
+    'Add thought: It shall trim leading and trailing spaces -->': function() {
       var thought = '  new thought  ';
       brain.addThought(thought);
       eq('new thought', brain.thoughts[0].thoughtText)
     },
-    'Add thought: It shall generate a unique id for each thought': function() {
+    'Add thought: It shall generate a unique id for each thought -->': function() {
       var thoughts = ['one', 'two'];
       for (var i = 0; i < thoughts.length; i++) {
         brain.addThought(thoughts[i]);
       }
       assert(brain.thoughts[0].id != brain.thoughts[1].id);
     },
-    'Add thought: It shall store all thoughts in local storage': function() {
+    'Add thought: It shall store all thoughts in local storage -->': function() {
       var thought = 'my thought';
       brain.addThought(thought);
       var localStorageThoughts = util.storeRead('thoughts');
@@ -35,7 +35,7 @@
       assert(result, 'thought not stored to local storage');
     }
     ,
-    'It shall have a way to get a thought by id': function() {
+    'It shall have a way to get a thought by id -->': function() {
       brain.thoughts = [];
       var thought = 'my thought';
       brain.addThought(thought);
@@ -43,7 +43,7 @@
       brain.addThought('wrong thought');
       eq('my thought', brain.getThoughtById(test_id).thoughtText);
     },
-    'Delete thought: It shall have a way to delete a thought': function() {
+    'Delete thought: It shall have a way to delete a thought -->': function() {
       brain.thoughts = [];
       var thought = 'my thought 1';
       brain.addThought(thought);
@@ -55,6 +55,15 @@
           fail();
         }
       });
+    },
+    'Change thought: It shall have a way to change thought text -->': function() {
+      brain.thoughts = [];
+      var thought = 'my thought';
+      var changedThoughtText = 'my changed thought';
+      brain.addThought(thought);
+      var test_id = brain.thoughts[0].id;
+      brain.changeThought(test_id, changedThoughtText);
+      eq('my changed thought', brain.thoughts[0].thoughtText);
     }
   });
   brain.thoughts = tempBrain;
