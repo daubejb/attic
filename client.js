@@ -212,6 +212,7 @@ var view = {
       if (elementClicked.className === 'thoughtItem') {
         var input = elementClicked.nextElementSibling;
         input.style.display = "inline";
+        input.style.zIndex = "1";
         input.focus();
         var tempVal = input.value;
         util.putTempValue(tempVal);
