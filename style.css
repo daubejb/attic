@@ -6,6 +6,16 @@ body {
   background-color: whitesmoke;
 }
 
+#selected-mode {
+  height: 1rem;
+}
+
+.selected {
+  border-left-color: #6b8e23;
+  border-left-width: 2px;
+  border-left-style: solid;
+}
+
 .content {
   margin: auto;
   width: 61%;
@@ -106,6 +116,7 @@ label.thoughtItem {
   font-size: 1.4rem;
   color: rgb(77, 77, 77);
   padding-left: 1rem;
+  z-index: 1;
 }
 
 label.thoughtItem:hover {

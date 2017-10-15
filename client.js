@@ -186,10 +186,36 @@ var handler = {
 
 
 var view = {
+  mode: 'normal',
   displayThoughts: function() {
     var thoughts = brain.thoughts;
+    var mode2 = view.mode;
     var test = document.getElementById('thought-list');
     test.innerHTML =  brain.thoughtTemplate(thoughts);
+  },
+  quickEditThought: function(event) {
+    var thoughtLabel = event.target;
+    var input = thoughtLabel.nextElementSibling;
+    input.style.display = "inline";
+    input.focus();
+    var tempVal = input.value;
+    util.putTempValue(tempVal);
+    input.value = '';
+    input.value = tempVal;
+    thoughtLabel.style.display = "none";
+  },
+  selectThought: function(event) {
+    selectedThought = event.target;
+    if (selectedThought.classList.contains("thoughtView")) {
+      view.mode = "thoughtSelected"
+      if (selectedThought.classList.contains("selected")) {
+        selectedThought.className = "thoughtView";
+        console.log('class removed');
+      } else {
+        selectedThought.className += " selected";
+        console.log('class added');
+      }
+    }
   },
   setUpEventListeners: function() {
 
@@ -199,32 +225,9 @@ var view = {
     });
 
     var thoughtsUl = document.getElementById('thought-list');
-
-    // thoughtsUl.addEventListener('click', function(event) {
-    //   var elementClicked = event.target;
-    //   if (elementClicked.className === 'deleteButton') {
-    //     handler.deleteThought(elementClicked.parentNode.id);
-    //   }
-    // });
-
-    thoughtsUl.addEventListener('dblclick', (event) => {
-      var elementClicked = event.target;
-      if (elementClicked.className === 'thoughtItem') {
-        var input = elementClicked.nextElementSibling;
-        input.style.display = "inline";
-        input.style.zIndex = "1";
-        input.focus();
-        var tempVal = input.value;
-        util.putTempValue(tempVal);
-        input.value = '';
-        input.value = tempVal;
-        elementClicked.style.display = "none";
-      }
-    });
-
     thoughtsUl.addEventListener('keyup', (event) => {
       var elementKeyUpped  = event.target;
-      var id = elementKeyUpped.parentNode.id;
+      var id = elementKeyUpped.parentNode.parentNode.id;
         if (event.which === ENTER_KEY) {
           event.target.blur();
           var label = elementKeyUpped.previousElementSibling;
