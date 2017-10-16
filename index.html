@@ -41,12 +41,10 @@
 
     <script id="thought-template" type="text/x-handlebars-template">
       {{#this}}
-        <li id="{{id}}">
-          <div class="thoughtView" onclick="view.selectThought(event)">
+        <li id="{{id}}" class="thoughtView" onclick="view.selectThought(event)">
             <label class="thoughtItem" ondblclick="view.quickEditThought(event)">{{thoughtText}}</label>
             <input style="display: none;" class="changeThought" value="{{thoughtText}}">
             <button class="deleteButton" onclick="handler.deleteThought(event)">🗙</button>
-        </div>
         </li>
       {{/this}}
     </script>
