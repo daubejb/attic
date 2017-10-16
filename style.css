@@ -96,13 +96,13 @@ body {
   line-height: 2rem;
 }
 
-#thought-list {
+#thoughtList {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-#thought-list li {
+#thoughtList li {
   border-bottom-color: rgb(237, 237, 237);
   border-bottom-style: solid;
   border-bottom-width: 1px;

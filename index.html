@@ -7,7 +7,7 @@
   <title>the attic</title>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
-<body>
+<body id="body">
   <div class="content">
     <h1 id="title">the attic</h1>
 
@@ -31,11 +31,12 @@
       <input type="number" id="targetThoughtPositionInput">
       <button onclick="handler.addConnection()">Connect thought</button>
     </div> -->
+
     <div id="thoughtContainer">
       <div id="thoughtControl">
         thought control
       </div>
-      <ul id="thought-list"></ul>
+      <ul id="thoughtList"></ul>
     </div>
 
     <script id="thought-template" type="text/x-handlebars-template">

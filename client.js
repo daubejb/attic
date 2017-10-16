@@ -190,7 +190,7 @@ var view = {
   displayThoughts: function() {
     var thoughts = brain.thoughts;
     var mode2 = view.mode;
-    var test = document.getElementById('thought-list');
+    var test = document.getElementById('thoughtList');
     test.innerHTML =  brain.thoughtTemplate(thoughts);
   },
   quickEditThought: function(event) {
@@ -207,14 +207,45 @@ var view = {
   selectThought: function(event) {
     selectedThought = event.target;
     if (selectedThought.classList.contains("thoughtView")) {
-      view.mode = "thoughtSelected"
+      view.mode = "list"
       if (selectedThought.classList.contains("selected")) {
         selectedThought.className = "thoughtView";
+        selectedThought.blur();
         console.log('class removed');
       } else {
         selectedThought.className += " selected";
+        selectedThought.focus();
         console.log('class added');
       }
+    }
+  },
+  navigateThoughts: function(event, key) {
+    var thoughtList = document.getElementById('thoughtList');
+    var thoughts = thoughtList.getElementsByTagName('li');
+    switch (key) {
+      case "j":
+        if (this.mode === 'normal') {
+          this.mode = 'list';
+          thoughts[0].focus();
+          thoughts[0].className += " selected";
+        } else if (this.mode === 'list') {
+          var selectedThought = document.getElementsByClassName('selected')[0];
+          if (selectedThought === thoughts[thoughts.length - 1]) { break; }
+          var nextThought = selectedThought.nextElementSibling;
+          selectedThought.className = "thoughtItem";
+          nextThought.className += " selected";
+        }
+        break;
+      case "k":
+        if (this.mode === 'list') {
+          var selectedThought = document.getElementsByClassName('selected')[0];
+          if (selectedThought === thoughts[0]) { break; }
+          var previousThought = selectedThought.previousElementSibling;
+          selectedThought.className = "thoughtItem";
+          previousThought.className += " selected";
+        }
+        break;
+
     }
   },
   setUpEventListeners: function() {
@@ -224,7 +255,7 @@ var view = {
       handler.addThought(event);
     });
 
-    var thoughtsUl = document.getElementById('thought-list');
+    var thoughtsUl = document.getElementById('thoughtList');
     thoughtsUl.addEventListener('keyup', (event) => {
       var elementKeyUpped  = event.target;
       var id = elementKeyUpped.parentNode.parentNode.id;
@@ -245,7 +276,34 @@ var view = {
           elementKeyUpped.style.display = "none";
         }
     });
+
+    var body = document.getElementById('body');
+    body.addEventListener('keyup', (event) => {
+      var key = event.key;
+      var addThoughtTextInput = document.getElementById("addThoughtTextInput");
+      if (document.activeElement != addThoughtTextInput) {
+        switch (key) {
+          case "j":
+            if (view.mode === 'normal') {
+            this.navigateThoughts(event, key);
+            break;
+            }
+          case "k":
+            this.navigateThoughts(event, key);
+            break;
+          case "n":
+            this.navigateThoughts(event, key);
+            break;
+          case "p":
+            this.navigateThoughts(event, key);
+            break;
+          case "t":
+            console.log('t pressed');
+            break;
+        }
+      }
+    });
   }
-};
+  }
 
 brain.init();
