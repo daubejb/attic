@@ -177,9 +177,8 @@ var handler = {
     connectionTypeInput.value = '';
     view.displayThoughts();
   },
-  deleteThought: function(event) {
-    var thoughtToDeleteId = event.target.id;
-    brain.deleteThought(thoughtToDeleteId);
+  deleteThought: function(id) {
+    brain.deleteThought(id);
     view.displayThoughts();
   }
 };
@@ -216,11 +215,15 @@ var view = {
       this.selectedThought = clickSelectedThought;
     }
   },
+  deleteThought: function(event) {
+    var thoughtToDeleteId = event.target.id;
+    handler.deleteThought(thoughtToDeleteId);
+  },
   navigateThoughts: function(event, keycode) {
     var thoughtList = document.getElementById('thoughtList');
     var thoughts = thoughtList.getElementsByTagName('li');
     switch (keycode) {
-      case 74:
+      case 74: // j - down
         if (this.mode === 'normal') {
           this.mode = 'list';
           thoughts[0].focus();
@@ -235,7 +238,7 @@ var view = {
           this.selectedThought = nextThought;
         }
         break;
-      case 75:
+      case 75: // k - up
         if (this.mode === 'list') {
           this.selectedThought = document.getElementsByClassName('selected')[0];
           if (this.selectedThought === thoughts[0]) { break; }
@@ -297,16 +300,22 @@ var view = {
       var addThoughtTextInput = document.getElementById("addThoughtTextInput");
       if (document.activeElement != addThoughtTextInput) {
         switch (keycode) {
-          case 74: //j
+          case 68: // d - delete
+            if (this.mode === 'list') {
+              var thoughtToDeleteId = this.selectedThought.id;
+              handler.deleteThought(thoughtToDeleteId);
+            }
+            break;
+          case 74: // j - down
             this.navigateThoughts(event, keycode);
             break;
-          case 75: //k
+          case 75: // k - up
             this.navigateThoughts(event, keycode);
             break;
-          case 78:  //t
+          case 78:  // n - new thought
             this.navigateThoughts(event, keycode);
             break;
-          case ESCAPE_KEY: //esc
+          case ESCAPE_KEY: // esc
             if (this.mode === "normal") { break; }
             this.navigateThoughts(event, keycode);
             break;
