@@ -302,8 +302,13 @@ var view = {
         switch (keycode) {
           case 68: // d - delete
             if (this.mode === 'list') {
+              var thoughtToDelete = this.selectedThought;
+              var nextThoughtToHighlight = thoughtToDelete.nextElementSibling;
+              if (nextThoughtToHighlight === null) { nextThoughtToHighlight = thoughtToDelete.previousElementSibling; }
               var thoughtToDeleteId = this.selectedThought.id;
+              this.selectedThought = nextThoughtToHighlight;
               handler.deleteThought(thoughtToDeleteId);
+              document.getElementById(this.selectedThought.id).className += " selected";
             }
             break;
           case 74: // j - down
