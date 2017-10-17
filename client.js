@@ -214,25 +214,13 @@ var view = {
       clickSelectedThought.className += " selected";
       clickSelectedThought.focus();
       this.selectedThought = clickSelectedThought;
-      
-      // if (view.mode === "normal") {
-      //   clickSelectedThought.className += " selected";
-      //   clickSelectedThought.focus();
-      //   this.selectedThought = clickSelectedThought;
-      // } else if (view.mode === "list") {
-      //   this.selectedThought.className = "thoughtView";
-      //   this.selectedThought.blur();
-      //   clickSelectedThought.className += "selected";
-      //   clickSelectedThought.focus();
-      //   this.selectedThought = clickSelectedThought;
-      // }
     }
   },
-  navigateThoughts: function(event, key) {
+  navigateThoughts: function(event, keycode) {
     var thoughtList = document.getElementById('thoughtList');
     var thoughts = thoughtList.getElementsByTagName('li');
-    switch (key) {
-      case "j":
+    switch (keycode) {
+      case 74:
         if (this.mode === 'normal') {
           this.mode = 'list';
           thoughts[0].focus();
@@ -244,18 +232,34 @@ var view = {
           var nextThought = this.selectedThought.nextElementSibling;
           this.selectedThought.className = "thoughtView";
           nextThought.className += " selected";
+          this.selectedThought = nextThought;
         }
         break;
-      case "k":
+      case 75:
         if (this.mode === 'list') {
           this.selectedThought = document.getElementsByClassName('selected')[0];
           if (this.selectedThought === thoughts[0]) { break; }
           var previousThought = this.selectedThought.previousElementSibling;
           this.selectedThought.className = "thoughtView";
           previousThought.className += " selected";
+          this.selectedThought = previousThought;
         }
         break;
-
+      case 78:
+        if (this.mode === 'list') {
+          this.selectedThought.className = "thoughtView";
+          this.selectedThought = '';
+          view.mode = "normal";
+        }
+        var addThoughtTextInput = document.getElementById('addThoughtTextInput');
+        addThoughtTextInput.focus();
+      case ESCAPE_KEY:
+        if (this.mode === 'normal') { break; }
+        this.selectedThought.className = "thoughtView";
+        this.selectedThought.blur();
+        this.selectedThought = '';
+        view.mode = "normal";
+        break;
     }
   },
   setUpEventListeners: function() {
@@ -289,24 +293,22 @@ var view = {
 
     var body = document.getElementById('body');
     body.addEventListener('keyup', (event) => {
-      var key = event.key;
+      var keycode = event.which;
       var addThoughtTextInput = document.getElementById("addThoughtTextInput");
       if (document.activeElement != addThoughtTextInput) {
-        switch (key) {
-          case "j":
-            this.navigateThoughts(event, key);
+        switch (keycode) {
+          case 74: //j
+            this.navigateThoughts(event, keycode);
             break;
-          case "k":
-            this.navigateThoughts(event, key);
+          case 75: //k
+            this.navigateThoughts(event, keycode);
             break;
-          case "n":
-            this.navigateThoughts(event, key);
+          case 78:  //t
+            this.navigateThoughts(event, keycode);
             break;
-          case "p":
-            this.navigateThoughts(event, key);
-            break;
-          case "t":
-            console.log('t pressed');
+          case ESCAPE_KEY: //esc
+            if (this.mode === "normal") { break; }
+            this.navigateThoughts(event, keycode);
             break;
         }
       }
