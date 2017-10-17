@@ -153,9 +153,15 @@ var handler = {
     var addThoughtTextInput = document.getElementById('addThoughtTextInput');
     var addThoughtTextInputValue = event.target.value;
 
+    if (event.which === ESCAPE_KEY) {
+      addThoughtTextInput.blur();
+      return;
+    }
+
     if (event.which !== ENTER_KEY || !addThoughtTextInputValue) {
       return;
     }
+    
 
     brain.addThought(addThoughtTextInputValue);
     addThoughtTextInput.value = '';
