@@ -64,13 +64,13 @@ var brain = {
     this.thoughts[sourcePosition].connections.push(
       {
         direction: 'sending',
-        connectionText: connectionTypeText.sending,
+        connectionText: connectionTypeText.sendingText,
         targetPosition: targetPosition,
         connectionType: connectionType
       },
       {
         direction: 'receiving',
-        connectionText: connectionTypeText.receiving,
+        connectionText: connectionTypeText.receivingText,
         targetPosition: targetPosition,
         connectionType: connectionType
       }
@@ -161,7 +161,6 @@ var handler = {
     if (event.which !== ENTER_KEY || !addThoughtTextInputValue) {
       return;
     }
-    
 
     brain.addThought(addThoughtTextInputValue);
     addThoughtTextInput.value = '';
@@ -222,7 +221,7 @@ var view = {
     }
   },
   deleteThought: function(event) {
-    var thoughtToDeleteId = event.target.id;
+    var thoughtToDeleteId = event.target.parentNode.id;
     handler.deleteThought(thoughtToDeleteId);
   },
   navigateThoughts: function(event, keycode) {

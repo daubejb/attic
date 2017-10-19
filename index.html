@@ -16,7 +16,7 @@
       <button id="addThoughtButton" onclick="handler.addThought()">Add thought</button>
     </div>
 
-    <!-- <div>
+    <div>
       <input type="number" id="sourceThoughtPositionInput">
       <select id="connectionTypeInput">
         <option value="synonym">is synonymous to</option>
@@ -30,7 +30,7 @@
       </select>
       <input type="number" id="targetThoughtPositionInput">
       <button onclick="handler.addConnection()">Connect thought</button>
-    </div> -->
+    </div>
 
     <div id="thoughtContainer">
       <div id="thoughtControl">
@@ -44,7 +44,7 @@
         <li id="{{id}}" class="thoughtView" onclick="view.selectThought(event)">
             <label class="thoughtItem" ondblclick="view.quickEditThought(event)">{{thoughtText}}</label>
             <input style="display: none;" class="changeThought" value="{{thoughtText}}">
-            <button class="deleteButton" onclick="handler.deleteThought(event)">🗙</button>
+            <button class="deleteButton" onclick="view.deleteThought(event)">🗙</button>
         </li>
       {{/this}}
     </script>
